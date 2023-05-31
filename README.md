@@ -1,9 +1,9 @@
 # AIM-CCReID
 An official implement of 《Good is Bad: Causality Inspired Cloth-Debiasing for Cloth-Changing Person Re-Identification》
 
-The testing and evaluation code, with the corresponding weights, are released for review.
+The testing and evaluation code, with the corresponding weights, are released now.
 
-The full training code will be released once it has been accepted. 
+The full training code will be released soon.
 
 #### Requirements
 - Python 3.6
