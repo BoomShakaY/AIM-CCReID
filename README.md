@@ -3,7 +3,8 @@ An official implement of 《Good is Bad: Causality Inspired Cloth-Debiasing for 
 
 The testing and evaluation code, with the corresponding weights, are released now.
 
-The full training code will be released soon.
+#### News 
+2023.10.24 The full codes are released! 
 
 #### Requirements
 - Python 3.6
@@ -59,17 +60,17 @@ The full training code will be released soon.
       <td>19.2</td>
 	</tr>
 </table>
-The indicators provided in this repo are broadly the same as those in the paper, and possibly even better (depending on what your focous is)
+The indicators provided in this repo are broadly the same as those in the paper, and possibly even better (depending on what your focus is)
 
 ## Datasets
-PRCC is avaiable at [Here](https://drive.google.com/file/d/1yTYawRm4ap3M-j0PjLQJ--xmZHseFDLz/view).
+PRCC is available at [Here](https://drive.google.com/file/d/1yTYawRm4ap3M-j0PjLQJ--xmZHseFDLz/view).
 
-LTCC is avaiable at [Here](https://naiq.github.io/LTCC_Perosn_ReID.html).
+LTCC is available at [Here](https://naiq.github.io/LTCC_Perosn_ReID.html).
 
-LaST is avaiable at [Here](https://github.com/shuxjweb/last).
+LaST is available at [Here](https://github.com/shuxjweb/last).
 
 ## Testing
-The trained models (weights) are avaiable at https://pan.baidu.com/s/1Du1XgoCim6I_bZtNRm3yPw?pwd=v4ly 
+The trained models (weights) are available at https://pan.baidu.com/s/1Du1XgoCim6I_bZtNRm3yPw?pwd=v4ly 
 code: v4ly 
 
 You will find the testing script for prcc and ltcc at `test_AIM.sh`, then modify the resume path to your own path where you placed the weights file.  
