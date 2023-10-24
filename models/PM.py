@@ -2,8 +2,14 @@ import math
 import torch
 import torch.nn as nn
 from torch.nn import init
+from torchvision import models
+from torch.autograd import Variable
+import torch.nn.functional as F
 from models.ResNet import resnet50
 
+
+
+######################################################################
 def weight_init(m):
     if isinstance(m, nn.Conv2d):
         n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
@@ -40,7 +46,6 @@ def spp_vertical(feats, pool_list, conv_list, bn_list, relu_list, num_strides, f
         feat_list.append(pcb_feat)
     return feat_list
 
-
 def global_pcb(feats, pool, conv, bn, relu, feat_list=[]):
     global_feat = pool(feats)
     global_feat = conv(global_feat)
@@ -50,14 +55,13 @@ def global_pcb(feats, pool, conv, bn, relu, feat_list=[]):
     feat_list.append(global_feat)
     return feat_list
 
-
 class PM(nn.Module):
-    def __init__(self, feature_dim, blocks = 15, num_stripes=6, local_conv_out_channels=256, avg=False, **kwargs):
+    def __init__(self, feature_dim, blocks=15, num_stripes=6, local_conv_out_channels=256, erase=0, loss={'htri'}, avg=False, **kwargs):
         super(PM, self).__init__()
         self.num_stripes = num_stripes
 
         model_ft = resnet50(pretrained=True, last_conv_stride=1)
-        self.num_ftrs = list(model_ft.layer4)[-1].conv1.in_channels
+        self.num_ftrs = list(model_ft.layer4)[-1].conv1.in_channels 
         self.features = model_ft
 
         self.global_pooling = nn.AdaptiveMaxPool2d(1)
@@ -65,12 +69,12 @@ class PM(nn.Module):
         self.global_bn = nn.BatchNorm2d(local_conv_out_channels)
         self.global_relu = nn.ReLU(inplace=True)
         
-        self.linear = nn.Linear(256 * blocks, feature_dim, bias=False)
+        self.trans = nn.Linear(256*blocks, feature_dim, bias=False)
         self.bn = nn.BatchNorm1d(feature_dim)
 
         weight_init(self.global_conv)
         weight_init(self.global_bn)
-        weight_init(self.linear)
+        weight_init(self.trans)
         init.normal_(self.bn.weight.data, 1.0, 0.02)
         init.constant_(self.bn.bias.data, 0.0)
 
@@ -78,16 +82,15 @@ class PM(nn.Module):
         self.pcb4_pool_list, self.pcb4_conv_list, self.pcb4_batchnorm_list, self.pcb4_relu_list = pcb_block(self.num_ftrs, 4, local_conv_out_channels, feature_dim, avg)
         self.pcb8_pool_list, self.pcb8_conv_list, self.pcb8_batchnorm_list, self.pcb8_relu_list = pcb_block(self.num_ftrs, 8, local_conv_out_channels, feature_dim, avg)
 
-    def forward(self, x):
-        feats = self.features(x)
+    def forward(self, x):       
+        feats = self.features(x)   
 
         feat_list = global_pcb(feats, self.global_pooling, self.global_conv, self.global_bn, self.global_relu, [])
         feat_list = spp_vertical(feats, self.pcb2_pool_list, self.pcb2_conv_list, self.pcb2_batchnorm_list, self.pcb2_relu_list, 2, feat_list)
         feat_list = spp_vertical(feats, self.pcb4_pool_list, self.pcb4_conv_list, self.pcb4_batchnorm_list, self.pcb4_relu_list, 4, feat_list)
         feat_list = spp_vertical(feats, self.pcb8_pool_list, self.pcb8_conv_list, self.pcb8_batchnorm_list, self.pcb8_relu_list, 8, feat_list)
 
-        f = torch.cat(feat_list, dim=1)
-        f = self.linear(f)
-        f = self.bn(f)
-
-        return feats, f
+        ret = torch.cat(feat_list, dim=1) 
+        ret = self.trans(ret)
+        ret = self.bn(ret)
+        return feats, ret
