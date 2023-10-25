@@ -70,9 +70,7 @@ LTCC is available at [Here](https://naiq.github.io/LTCC_Perosn_ReID.html).
 LaST is available at [Here](https://github.com/shuxjweb/last).
 
 ## Testing
-The trained models (weights) are available at https://pan.baidu.com/s/1Du1XgoCim6I_bZtNRm3yPw?pwd=v4ly 
-code: v4ly 
-
+The trained models (weights) are available at [Baidu Disk](https://pan.baidu.com/s/1Du1XgoCim6I_bZtNRm3yPw?pwd=v4ly) or [Google Drive](https://drive.google.com/drive/folders/1xohg_OAHjNyy7LLq3Fq_KowcEP9IlY8k?usp=sharing).
 You will find the testing script for prcc and ltcc at `test_AIM.sh`, then modify the resume path to your own path where you placed the weights file.  
 
 To be noticed, you need to modify the `DATA ROOT` and `OUTPUT` in the `configs/default_img.py` to your own path before testing.
