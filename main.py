@@ -154,7 +154,7 @@ def main(config):
         start_train_time = time.time()
 
         train_aim(config, epoch, model, model2, classifier, clothes_classifier, clothes_classifier2, fuse, criterion_cla, criterion_pair,
-            criterion_clothes, criterion_adv, criterion_pair2, optimizer, optimizer2, optimizer_cc, trainloader, pid2clothes, kl)
+            criterion_clothes, criterion_adv, optimizer, optimizer2, optimizer_cc, trainloader, pid2clothes, kl)
 
         train_time += round(time.time() - start_train_time)
         
