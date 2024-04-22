@@ -5,7 +5,7 @@ from losses.contrastive_loss import ContrastiveLoss
 from losses.arcface_loss import ArcFaceLoss
 from losses.cosface_loss import CosFaceLoss, PairwiseCosFaceLoss
 from losses.circle_loss import CircleLoss, PairwiseCircleLoss
-from losses.clothes_based_adversarial_loss import ClothesBasedAdversarialLoss, ClothesBasedAdversarialLossWithMemoryBank
+from losses.clothes_based_adversarial_loss import ClothesBasedAdversarialLoss
 
 def build_losses(config, num_train_clothes):
     # Build identity classification loss
@@ -46,9 +46,6 @@ def build_losses(config, num_train_clothes):
     # Build clothes-based adversarial loss
     if config.LOSS.CAL == 'cal':
         criterion_cal = ClothesBasedAdversarialLoss(scale=config.LOSS.CLA_S, epsilon=config.LOSS.EPSILON)
-    elif config.LOSS.CAL == 'calwithmemory':
-        criterion_cal = ClothesBasedAdversarialLossWithMemoryBank(num_clothes=num_train_clothes, feat_dim=config.MODEL.FEATURE_DIM,
-                             momentum=config.LOSS.MOMENTUM, scale=config.LOSS.CLA_S, epsilon=config.LOSS.EPSILON)
     else:
         raise KeyError("Invalid clothing classification loss: '{}'".format(config.LOSS.CAL))
 
