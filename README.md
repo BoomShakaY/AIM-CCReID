@@ -11,6 +11,7 @@ The testing and evaluation code, with the corresponding weights, are released no
 - Pytorch 1.6.0
 - yacs
 - apex
+(remind: the apex is optional, not recommended if you have enough GPU memory; just comment all amp related codes)
 
 ## Performance of AIM 
 <table>
