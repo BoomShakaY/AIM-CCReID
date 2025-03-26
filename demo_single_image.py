@@ -43,7 +43,7 @@ def extract_img_feature(model, img):
 config, args = parse_option()
 os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
 
-dict = torch.load(args.weights)
+dict = torch.load(args.weights, weights_only=True)
 model = ResNet50(config)
 model.load_state_dict(dict['model_state_dict'])
 model = model.cuda()
