@@ -9,8 +9,8 @@ An official implementation of our CVPR'23 paper:
 
 
 <div style="display: flex; justify-content: center; align-items: center;">
-  <img src="Figures/CVPR23.jpg" alt="motivation" width="200" style="margin-right: 40px;" />
-  <img src="Figures/Framework.png" alt="framework" width="430" style="margin-left: 40px;" />
+  <img src="Figures/CVPR23.jpg" alt="motivation" width="200" />
+  <img src="Figures/Framework.png" alt="framework" width="430" />
 </div>
 
 #### News 
