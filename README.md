@@ -1,7 +1,10 @@
 # AIM-CCReID
 An official implement of 《Good is Bad: Causality Inspired Cloth-Debiasing for Cloth-Changing Person Re-Identification》
 
-The testing and evaluation code, with the corresponding weights, are released now.
+<div style="display: flex; justify-content: center; align-items: center;">
+  <img src="Figures/CVPR23.jpg" alt="motivation" width="300" style="margin-right: 20px;"/>
+  <img src="Figures/Framework.png" alt="framework" width="640"  />
+</div>
 
 #### News 
 2023.10.24 The full codes are released! 
