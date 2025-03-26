@@ -1,5 +1,12 @@
 # AIM-CCReID
-An official implement of 《Good is Bad: Causality Inspired Cloth-Debiasing for Cloth-Changing Person Re-Identification》
+An official implementation of our CVPR'23 paper:
+
+《Good is Bad: Causality Inspired Cloth-Debiasing for Cloth-Changing Person Re-Identification》
+
+[\[Paper Link\]](https://openaccess.thecvf.com/content/CVPR2023/papers/Yang_Good_Is_Bad_Causality_Inspired_Cloth-Debiasing_for_Cloth-Changing_Person_Re-Identification_CVPR_2023_paper.pdf)
+[\[Repo\]](https://github.com/BoomShakaY/AIM-CCReID)
+[\[About Me\]](https://gavinyoung1.github.io/)
+
 
 <div style="display: flex; justify-content: center; align-items: center;">
   <img src="Figures/CVPR23.jpg" alt="motivation" width="300" style="margin-right: 20px;"/>
@@ -79,4 +86,15 @@ You will find the testing script for prcc and ltcc at `test_AIM.sh`, then modify
 
 To be noticed, you need to modify the `DATA ROOT` and `OUTPUT` in the `configs/default_img.py` to your own path before testing.
 
+## 📖 Citation
 
+If you find our work useful in your research, please consider citing:
+
+```bibtex
+@inproceedings{yang2023good,
+  title={Good is bad: Causality inspired cloth-debiasing for cloth-changing person re-identification},
+  author={Yang, Zhengwei and Lin, Meng and Zhong, Xian and Wu, Yu and Wang, Zheng},
+  booktitle={Proceedings of the IEEE/CVF conference on computer vision and pattern recognition},
+  pages={1472--1481},
+  year={2023}
+}
