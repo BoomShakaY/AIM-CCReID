@@ -9,10 +9,11 @@ class ResNet50(nn.Module):
         super().__init__()
 
         resnet50 = torchvision.models.resnet50(pretrained=True)
+        # or passing weights=ResNet50_Weights.IMAGENET1K_V1  instead of pretrained=True to haddle the warning
         if config.MODEL.RES4_STRIDE == 1:
             resnet50.layer4[0].conv2.stride=(1, 1)
-            resnet50.layer4[0].downsample[0].stride=(1, 1)
-
+            resnet50.layer4[0].downsample[0].stride=(1, 1) 
+        # self.base = nn.Sequential(*list(resnet50.children())[:-2])
         self.conv1 = resnet50.conv1
         self.bn1 = resnet50.bn1
         self.relu = resnet50.relu
@@ -22,6 +23,7 @@ class ResNet50(nn.Module):
         self.layer2 = resnet50.layer2
         self.layer3 = resnet50.layer3
         self.layer4 = resnet50.layer4
+
         if config.MODEL.POOLING.NAME == 'avg':
             self.globalpooling = nn.AdaptiveAvgPool2d(1)
         elif config.MODEL.POOLING.NAME == 'max':
@@ -37,18 +39,21 @@ class ResNet50(nn.Module):
         init.normal_(self.bn.weight.data, 1.0, 0.02)
         init.constant_(self.bn.bias.data, 0.0)
         
-    def forward(self, x):
+    def forward(self, tmp):
+        tmp = self.conv1(tmp)
+        tmp = self.bn1(tmp)
+        tmp = self.relu(tmp)
+        tmp = self.maxpool(tmp)
 
-        x = self.conv1(x)
-        x = self.bn1(x)
-        x = self.relu(x)
-        x = self.maxpool(x)
-        x = self.layer1(x)
-        x = self.layer2(x)
-        x = self.layer3(x)
-        base_f = self.layer4(x)
-        f = self.globalpooling(base_f)
-        f = f.view(f.size(0), -1)
-        f = self.bn(f)
+        tmp = self.layer1(tmp)
+        tmp = self.layer2(tmp)
+        tmp = self.layer3(tmp)
+        old_x = self.layer4(tmp) # torch.Size([32, 2048, 24, 12])
+        
+        # old_x = self.base(tmp)
 
-        return base_f, f
+        x = self.globalpooling(old_x) # torch.Size([32, 4096, 1, 1])
+        x = x.view(x.size(0), -1)
+        f = self.bn(x)
+
+        return old_x, f
